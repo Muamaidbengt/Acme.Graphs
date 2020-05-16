@@ -54,6 +54,13 @@ namespace Acme.Tests {
         }
 
         [Fact]
+        public void NullEqualsOp() {
+            var y = NodeIdentity.Of("foo");
+
+            (null == y).Should().BeFalse();
+        }
+
+        [Fact]
         public void EqualsOpNegativeTest() {
             var x = NodeIdentity.Of("foo");
             var y = NodeIdentity.Of("bar");
@@ -83,6 +90,12 @@ namespace Acme.Tests {
 #pragma warning disable CS1718 // Comparison made to same variable
             (x != x).Should().BeFalse();
 #pragma warning restore CS1718 // Comparison made to same variable
+        }
+
+        public void NullNotEqualsOp() {
+            var y = NodeIdentity.Of("foo");
+
+            (null != y).Should().BeTrue();
         }
 
         [Fact]
