@@ -18,6 +18,8 @@ namespace Acme.Graphs {
             _edges = new HashSet<DirectedEdge>(edges);
         }
 
+        public int EdgeCount => _edges.Count;
+
         public static DirectedGraph Of(IEnumerable<DirectedEdge> edges, IEnumerable<NodeIdentity> nodes) 
             => new DirectedGraph(edges, nodes);
     }
