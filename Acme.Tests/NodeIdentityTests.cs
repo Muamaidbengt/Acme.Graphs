@@ -92,6 +92,7 @@ namespace Acme.Tests {
 #pragma warning restore CS1718 // Comparison made to same variable
         }
 
+        [Fact]
         public void NullNotEqualsOp() {
             var y = NodeIdentity.Of("foo");
 

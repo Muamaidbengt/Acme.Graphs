@@ -43,7 +43,7 @@ namespace Acme.Graphs
             }
 
             if (a is null) {
-                return false;
+                return true;
             }
 
             return !a.Equals(b);
