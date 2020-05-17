@@ -19,7 +19,6 @@ namespace Acme.Graphs {
             }
 
             unvisited.Enqueue(start);
-            addNeighbors(graph.EdgesFrom(start));
 
             while (unvisited.Any()) {
                 var current = unvisited.Dequeue();

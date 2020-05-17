@@ -1,4 +1,5 @@
 ﻿using Acme.Graphs;
+using Acme.Graphs.Strategies;
 using Acme.Tests.TestHelpers;
 using FluentAssertions;
 using System;
@@ -6,38 +7,38 @@ using System.Linq;
 using Xunit;
 
 namespace Acme.Tests {
-    public class BreadthFirstTests {
+    public class DepthFirstTests {
         [Fact]
         public void GraphCannotBeNull() {
-            typeof(BreadthFirst).Invoking(_ => 
-                BreadthFirst.VisitAll(null, NodeIdentity.Of("A")).ToList())
+            typeof(DepthFirst).Invoking(_ =>
+                DepthFirst.VisitAll(null, NodeIdentity.Of("A")).ToList())
                 .Should().Throw<ArgumentNullException>()
                 .Which.ParamName.Should().Be("graph");
         }
 
         [Fact]
         public void StartCannotBeNull() {
-            typeof(BreadthFirst).Invoking(_ =>
-                BreadthFirst.VisitAll(CreateSimpleGraph(), null).ToList())
+            typeof(DepthFirst).Invoking(_ =>
+                DepthFirst.VisitAll(CreateSimpleGraph(), null).ToList())
                 .Should().Throw<ArgumentNullException>()
                 .Which.ParamName.Should().Be("start");
         }
 
         [Fact]
         public void VisitsNodesInOrder() {
-            BreadthFirst.VisitAll(CreateSimpleGraph(), NodeIdentity.Of("A"))
+            DepthFirst.VisitAll(CreateSimpleGraph(), NodeIdentity.Of("A"))
                 .Should().ContainInOrder(
                     NodeIdentity.Of("A"),
-                    NodeIdentity.Of("B1"),
                     NodeIdentity.Of("B2"),
+                    NodeIdentity.Of("C2"),
                     NodeIdentity.Of("C1"),
-                    NodeIdentity.Of("C2")
+                    NodeIdentity.Of("B1")
                 ).And.HaveCount(5);
         }
 
         [Fact]
         public void DoesNotVisitDisconnectedNodes() {
-            BreadthFirst.VisitAll(
+            DepthFirst.VisitAll(
                 GraphFactory.BuildGraph("A-B", "C-D"), NodeIdentity.Of("A"))
                 .Should()
                 .ContainInOrder(
