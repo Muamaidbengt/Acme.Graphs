@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 
 namespace Acme.Graphs {
     public class DirectedGraph {
 
-        private readonly HashSet<DirectedEdge> _edges;
+        private readonly Dictionary<NodeIdentity, List<DirectedEdge>> _edges = new Dictionary<NodeIdentity, List<DirectedEdge>>();
         private readonly HashSet<NodeIdentity> _nodes = new HashSet<NodeIdentity>();
         DirectedGraph(IEnumerable<DirectedEdge> edges, IEnumerable<NodeIdentity> nodes) {
             ArgumentHelpers.ThrowIfNull(() => edges);
@@ -15,10 +16,20 @@ namespace Acme.Graphs {
                 }
             }
 
-            _edges = new HashSet<DirectedEdge>(edges);
+            _edges = edges.GroupBy(e => e.From)
+                .ToDictionary(kv => kv.Key, kv => kv.ToList());
         }
 
-        public int EdgeCount => _edges.Count;
+        public IEnumerable<DirectedEdge> EdgesFrom(NodeIdentity node) {
+            if (_edges.TryGetValue(node, out var found)) {
+                return found;
+            }
+            return new List<DirectedEdge>();
+        }
+
+        public int EdgeCount => _edges
+            .SelectMany(fromEdge => fromEdge.Value)
+            .Count();
 
         public static DirectedGraph Of(IEnumerable<DirectedEdge> edges, IEnumerable<NodeIdentity> nodes) 
             => new DirectedGraph(edges, nodes);
