@@ -42,5 +42,9 @@ namespace Acme.Tests.TestHelpers {
                 yield return CreateNode(d);
             }
         }
+
+        public static Path CreatePath(params string[] descriptors) {
+            return Path.Of(CreateNodes(descriptors));
+        }
     }
 }
