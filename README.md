@@ -1,5 +1,7 @@
 # Acme.Graphs
 
+![.NET Core](https://github.com/Muamaidbengt/Acme.Graphs/workflows/.NET%20Core/badge.svg)
+
 A library for generating test cases.
 
 Based on [this paper](https://hal.inria.fr/hal-01405275/document).
