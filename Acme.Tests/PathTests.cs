@@ -21,15 +21,25 @@ namespace Acme.Tests {
 
         [Fact]
         public void EmptyPathIsEmpty() {
-            Path.Empty.Should().BeEmpty();
+            var path = Path.Empty;
+            path.Should().BeEmpty();
 
-            ((IEnumerable)Path.Empty).GetEnumerator()
+            ((IEnumerable)path).GetEnumerator()
                 .MoveNext().Should().BeFalse();
+
+            Path.IsEmpty(path).Should().BeTrue();
+        }
+
+        [Fact]
+        public void EmptyPathHasLengthZero() {
+            Path.Empty.Length.Should().Be(0);
         }
 
         [Fact]
         public void NonEmptyPathIsNotEmpty() {
-            Path.Of(NodeIdentity.Of("foo")).Should().NotBeEmpty();
+            var path = Path.Of(NodeIdentity.Of("foo"));
+            path.Should().NotBeEmpty();
+            Path.IsEmpty(path).Should().BeFalse();
         }
 
         [Fact]
@@ -85,6 +95,24 @@ namespace Acme.Tests {
             (null == p1).Should().BeFalse();
             (p1 == null).Should().BeFalse();
             p1.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ThePathOfAbcStartsInA() {
+            var path = Path.Of(NodeIdentity.Of("A"), NodeIdentity.Of("B"), NodeIdentity.Of("C"));
+            path.Start.Should().Be(NodeIdentity.Of("A"));
+        }
+
+        [Fact]
+        public void ThePathOfAbcEndsInC() {
+            var path = Path.Of(NodeIdentity.Of("A"), NodeIdentity.Of("B"), NodeIdentity.Of("C"));
+            path.End.Should().Be(NodeIdentity.Of("C"));
+        }
+
+        [Fact]
+        public void ThePathOfAbcHasLength3() {
+            var path = Path.Of(NodeIdentity.Of("A"), NodeIdentity.Of("B"), NodeIdentity.Of("C"));
+            path.Length.Should().Be(3);
         }
     }
 }

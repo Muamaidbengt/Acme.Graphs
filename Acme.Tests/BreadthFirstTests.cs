@@ -46,6 +46,37 @@ namespace Acme.Tests {
                 ).And.HaveCount(2);
         }
 
+        [Fact]
+        public void CanFindStraightPath() {
+            BreadthFirst.FindPath(GraphFactory.BuildGraph("A-B", "B-C", "C-D"), NodeIdentity.Of("A"), node => node == NodeIdentity.Of("D"))
+                .Should().ContainInOrder(
+                    NodeIdentity.Of("A"),
+                    NodeIdentity.Of("B"),
+                    NodeIdentity.Of("C"),
+                    NodeIdentity.Of("D")
+                ).And.HaveCount(4);
+        }
+
+        [Fact]
+        public void FindsShortestPath() {
+            BreadthFirst.FindPath(
+                GraphFactory.BuildGraph("A-B", "B-C", "C-D", "A-D"), 
+                NodeIdentity.Of("A"), 
+                node => node == NodeIdentity.Of("D"))
+                .Should().ContainInOrder(
+                    NodeIdentity.Of("A"),
+                    NodeIdentity.Of("D")
+                ).And.HaveCount(2);
+        }
+
+        [Fact]
+        public void ReturnsEmptyPathIfNoPathIsFound() {
+            var path = (object)BreadthFirst.FindPath(CreateSimpleGraph(), 
+                NodeIdentity.Of("A"), 
+                node => node == NodeIdentity.Of("notfound"));
+            path.Should().Be(Path.Empty);
+        }
+
         private static DirectedGraph CreateSimpleGraph() {
             return GraphFactory.BuildGraph("A-B1", "A-B2", "B1-C1", "B2-C1", "B2-C2");
         }

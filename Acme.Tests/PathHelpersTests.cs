@@ -3,6 +3,7 @@ using Acme.Graphs.Helpers;
 using Xunit;
 using FluentAssertions;
 using Acme.Graphs;
+using System.Linq;
 
 namespace Acme.Tests {
     public class PathHelpersTests {
@@ -70,6 +71,40 @@ namespace Acme.Tests {
         public void PathOverAbcDoesNotContainBb() {
             var path = GraphFactory.CreatePath("A", "B", "C");
             path.ContainsExactly(new[] { GraphFactory.CreateEdge("B-B") }).Should().BeFalse();
+        }
+
+        [Theory]
+        [InlineData("ABCD", "BC")]
+        [InlineData("AABCDD", "BC")]
+        [InlineData("AABCDD", "ABCD")]
+        [InlineData("ABC", "BC")]
+        [InlineData("ABC", "AB")]
+        [InlineData("ABC", "ABC")]
+        [InlineData("ABC", "")]
+        public void PathContains(string first, string other) {
+            var firstPath = CreatePath(first);
+            var otherPath = CreatePath(other);
+            firstPath.Contains(otherPath).Should().BeTrue();
+        }
+
+        [Theory]
+        [InlineData("ABC", "BCD", "ABCD")]
+        [InlineData("ABC", "CD", "ABCD")]
+        [InlineData("AB", "CD", "ABCD")]
+        [InlineData("AB", "D", "ABCD")]
+        [InlineData("A", "D", "AD")]
+        public void Extend(string from, string to, string expected) {
+            var graph = GraphFactory.BuildGraph("A-B", "B-C", "C-D", "A-D");
+            var fromPath = CreatePath(from);
+            var toPath = CreatePath(to);
+            var expectedPath = CreatePath(expected);
+
+            object extension = fromPath.Extend(toPath, graph);
+            extension.Should().Be(expectedPath);
+        }
+
+        private Path CreatePath(string sequence) {
+            return GraphFactory.CreatePath(sequence.Select(letter => letter.ToString()).ToArray());
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Acme.Graphs.Strategies;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Acme.Graphs.Helpers {
@@ -22,18 +23,53 @@ namespace Acme.Graphs.Helpers {
         }
 
         public static bool ContainsExactly(this Path path, IEnumerable<DirectedEdge> edges) {
+            ArgumentHelpers.ThrowIfNull(() => path);
+            ArgumentHelpers.ThrowIfNull(() => edges);
+
             var needle = Path.Of(edges);
-            var idx = 0;
-            foreach (var step in path) {
-                if (step == needle[idx]) {
-                    if (++idx == needle.Count()) {
-                        return true;
+            return Contains(path, needle);
+        }
+
+        public static bool Contains(this Path path, Path other) {
+            ArgumentHelpers.ThrowIfNull(() => path);
+            ArgumentHelpers.ThrowIfNull(() => other);
+
+            if (path.Length < other.Length) {
+                return false;
+            } else if (other.Length == 0) {
+                return true;
+            }
+
+            for (var i = 0; i <= path.Length - other.Length; i++) {
+                var j = 0;
+                for (j = 0; j < other.Length; j++) {
+                    if (path[i + j] != other[j]) {
+                        break;
                     }
-                } else { 
-                    idx = 0; 
+                }
+
+                if (j == other.Length) {
+                    return true;
                 }
             }
+            
             return false;
+        }
+
+        public static Path Extend(this Path firstPath, Path secondPath, DirectedGraph graph) {
+            ArgumentHelpers.ThrowIfNull(() => firstPath);
+            ArgumentHelpers.ThrowIfNull(() => secondPath);
+            ArgumentHelpers.ThrowIfNull(() => graph);
+
+            var overlap = OverlapFinder.FindOverlap(firstPath, secondPath);
+            if (!Path.IsEmpty(overlap)) {
+                return overlap;
+            }
+            var shortestPath = BreadthFirst.FindPath(graph, firstPath.End, node => node == secondPath.Start);
+            if (Path.IsEmpty(shortestPath)) {
+                return Path.Empty;
+            }
+            return Path.Join(firstPath, Path.Of(shortestPath.GetRange(1, shortestPath.Length-2)), secondPath);
         }
     }
 }
