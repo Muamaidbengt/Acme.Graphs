@@ -17,9 +17,16 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
+        source-url: https://nuget.pkg.github.com/muamaidbengt/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Install dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+    - name: Create the package
+      run: dotnet pack --configuration Release Acme.Graphs
+    - name: Publish the package to GPR
+      run: dotnet nuget push Acme.Graphs/bin/Release/*.nupkg
