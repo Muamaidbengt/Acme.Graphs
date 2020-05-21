@@ -46,7 +46,8 @@ namespace Acme.Graphs.Strategies {
 
             var primePaths = new List<Path>();
             foreach (var possiblyPrime in pathsOfLength.OrderByDescending(kv => kv.Key).SelectMany(kv => kv.Value)) {
-                if (primePaths.All(prime => !prime.ContainsExactly(possiblyPrime))) {
+                var possiblyPrimePath = Path.Of(possiblyPrime);
+                if (primePaths.All(prime => !prime.Contains(possiblyPrimePath))) {
                     primePaths.Add(Path.Of(possiblyPrime));
                 }
             }

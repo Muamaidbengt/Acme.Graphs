@@ -55,24 +55,6 @@ namespace Acme.Tests {
             path.Visits(NodeIdentity.Of("Q")).Should().BeFalse();
         }
 
-        [Fact]
-        public void PathOverAbcContainsAb() {
-            var path = GraphFactory.CreatePath("A", "B", "C");
-            path.ContainsExactly(new[] { GraphFactory.CreateEdge("A-B") }).Should().BeTrue();
-        }
-
-        [Fact]
-        public void PathOverAbcDoesNotContainBa() {
-            var path = GraphFactory.CreatePath("A", "B", "C");
-            path.ContainsExactly(new[] { GraphFactory.CreateEdge("B-A") }).Should().BeFalse();
-        }
-
-        [Fact]
-        public void PathOverAbcDoesNotContainBb() {
-            var path = GraphFactory.CreatePath("A", "B", "C");
-            path.ContainsExactly(new[] { GraphFactory.CreateEdge("B-B") }).Should().BeFalse();
-        }
-
         [Theory]
         [InlineData("ABCD", "BC")]
         [InlineData("AABCDD", "BC")]
@@ -85,6 +67,16 @@ namespace Acme.Tests {
             var firstPath = CreatePath(first);
             var otherPath = CreatePath(other);
             firstPath.Contains(otherPath).Should().BeTrue();
+        }
+
+        [Theory]
+        [InlineData("ABC", "CD")]
+        [InlineData("ABC", "AC")]
+        [InlineData("", "AB")]
+        public void PathDoesNotContain(string first, string other) {
+            var firstPath = CreatePath(first);
+            var otherPath = CreatePath(other);
+            firstPath.Contains(otherPath).Should().BeFalse();
         }
 
         [Theory]
