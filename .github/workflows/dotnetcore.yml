@@ -85,8 +85,5 @@ jobs:
       with:
         nuget-version: latest
 
-    - name: Add GPR Source
-      run: nuget sources Add -Name "GPR" -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -UserName ${{ github.repository_owner }} -Password ${{ secrets.GITHUB_TOKEN }}
- 
     - name: Publish the package to GPR
       run: nuget push Acme.Graphs/bin/Release/*.nupkg -Source "GPR"
