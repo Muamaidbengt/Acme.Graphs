@@ -80,5 +80,13 @@ jobs:
     - name: Create the package
       run: dotnet pack --configuration Release Acme.Graphs
       
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.2
+      with:
+        nuget-version: latest
+
+    - name: Add GPR Source
+      run: nuget sources Add -Name "GPR" -Source ${{ secrets.GPR_URI }} -UserName ${{ GPR_USERNAME }} -Password ${{ secrets.GITHUB_TOKEN }}
+ 
     - name: Publish the package to GPR
-      run: dotnet nuget push Acme.Graphs/bin/Release/*.nupkg
+      run: nuget push Acme.Graphs/bin/Release/*.nupkg -Source "GPR"
