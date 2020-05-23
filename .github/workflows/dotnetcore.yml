@@ -85,8 +85,5 @@ jobs:
       with:
         nuget-version: latest
       
-    - name: Setup APIkey because why not
-      run: nuget setapikey {{ secrets.GITHUB_TOKEN }}
-      
     - name: Publish the package to GPR
       run: nuget push Acme.Graphs/bin/Release/*.nupkg
