@@ -1,7 +1,7 @@
 ﻿using Acme.Graphs;
-using Xunit;
 using FluentAssertions;
 using System;
+using Xunit;
 
 namespace Acme.Tests {
     public class DirectedEdgeTests {

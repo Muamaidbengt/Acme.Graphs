@@ -47,7 +47,7 @@ namespace Acme.Tests {
             var nodes = new List<NodeIdentity> { NodeIdentity.Of("foo") };
             var path = Path.Of(nodes);
             nodes.Add(NodeIdentity.Of("bar"));
-            
+
             path.Should().NotContain(NodeIdentity.Of("bar"));
         }
 

@@ -17,11 +17,11 @@ namespace Acme.Tests {
             var xform = TouringGraphTransformer
                 .Transform(graph, paths, NodeIdentity.Of("S"), NodeIdentity.Of("T"));
 
-           xform.EdgeCount.Should().Be(17);
+            xform.EdgeCount.Should().Be(17);
         }
 
         private DirectedGraph CreateGraph() {
-            return GraphFactory.BuildGraph("S-1","1-2","2-T",
+            return GraphFactory.BuildGraph("S-1", "1-2", "2-T",
                 "1-3", "3-4", "4-1", "4-5", "5-4");
         }
 

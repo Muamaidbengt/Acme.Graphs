@@ -7,7 +7,7 @@ namespace Acme.Tests {
     public class ArgumentHelpersTests {
         [Fact]
         public void DoesNotThrowIfExpressionIsNotNull() {
-            typeof(ArgumentHelpers).Invoking(_ => 
+            typeof(ArgumentHelpers).Invoking(_ =>
                 ArgumentHelpers.ThrowIfNull(() => "not null"))
                 .Should().NotThrow();
         }

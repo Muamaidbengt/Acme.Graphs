@@ -9,7 +9,7 @@ namespace Acme.Tests {
     public class BreadthFirstTests {
         [Fact]
         public void GraphCannotBeNull() {
-            typeof(BreadthFirst).Invoking(_ => 
+            typeof(BreadthFirst).Invoking(_ =>
                 BreadthFirst.VisitAll(null, NodeIdentity.Of("A")).ToList())
                 .Should().Throw<ArgumentNullException>()
                 .Which.ParamName.Should().Be("graph");
@@ -41,7 +41,7 @@ namespace Acme.Tests {
                 GraphFactory.BuildGraph("A-B", "C-D"), NodeIdentity.Of("A"))
                 .Should()
                 .ContainInOrder(
-                    NodeIdentity.Of("A"), 
+                    NodeIdentity.Of("A"),
                     NodeIdentity.Of("B")
                 ).And.HaveCount(2);
         }
@@ -60,8 +60,8 @@ namespace Acme.Tests {
         [Fact]
         public void FindsShortestPath() {
             BreadthFirst.FindPath(
-                GraphFactory.BuildGraph("A-B", "B-C", "C-D", "A-D"), 
-                NodeIdentity.Of("A"), 
+                GraphFactory.BuildGraph("A-B", "B-C", "C-D", "A-D"),
+                NodeIdentity.Of("A"),
                 node => node == NodeIdentity.Of("D"))
                 .Should().ContainInOrder(
                     NodeIdentity.Of("A"),
@@ -71,8 +71,8 @@ namespace Acme.Tests {
 
         [Fact]
         public void ReturnsEmptyPathIfNoPathIsFound() {
-            var path = (object)BreadthFirst.FindPath(CreateSimpleGraph(), 
-                NodeIdentity.Of("A"), 
+            var path = (object)BreadthFirst.FindPath(CreateSimpleGraph(),
+                NodeIdentity.Of("A"),
                 node => node == NodeIdentity.Of("notfound"));
             path.Should().Be(Path.Empty);
         }

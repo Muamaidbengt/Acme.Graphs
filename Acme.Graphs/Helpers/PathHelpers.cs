@@ -52,7 +52,7 @@ namespace Acme.Graphs.Helpers {
                     return true;
                 }
             }
-            
+
             return false;
         }
 
@@ -69,7 +69,7 @@ namespace Acme.Graphs.Helpers {
             if (Path.IsEmpty(shortestPath)) {
                 return Path.Empty;
             }
-            return Path.Join(firstPath, Path.Of(shortestPath.GetRange(1, shortestPath.Length-2)), secondPath);
+            return Path.Join(firstPath, Path.Of(shortestPath.GetRange(1, shortestPath.Length - 2)), secondPath);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Acme.Graphs.Strategies {
     public static class TouringGraphTransformer {
-        public static DirectedGraph Transform(DirectedGraph originalGraph, IEnumerable<Path> primePaths, 
+        public static DirectedGraph Transform(DirectedGraph originalGraph, IEnumerable<Path> primePaths,
             NodeIdentity start, NodeIdentity end) {
             ArgumentHelpers.ThrowIfNull(() => originalGraph);
             ArgumentHelpers.ThrowIfNull(() => primePaths);
@@ -47,7 +47,7 @@ namespace Acme.Graphs.Strategies {
             return DirectedGraph.Of(edges, nodes);
         }
 
-        private static bool ContainsAnyOtherPrimePath(IEnumerable<Path> primePaths, 
+        private static bool ContainsAnyOtherPrimePath(IEnumerable<Path> primePaths,
             Path pathToCheck, params Path[] excludedPaths) {
             foreach (var otherPrime in primePaths) {
                 if (!excludedPaths.Contains(otherPrime) && pathToCheck.Contains(otherPrime)) {

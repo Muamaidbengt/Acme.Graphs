@@ -1,9 +1,9 @@
-﻿using Acme.Tests.TestHelpers;
+﻿using Acme.Graphs;
 using Acme.Graphs.Helpers;
-using Xunit;
+using Acme.Tests.TestHelpers;
 using FluentAssertions;
-using Acme.Graphs;
 using System.Linq;
+using Xunit;
 
 namespace Acme.Tests {
     public class PathHelpersTests {
@@ -12,7 +12,7 @@ namespace Acme.Tests {
             var path = GraphFactory.CreateEdges();
             path.DescribesCycle().Should().BeFalse();
         }
-        
+
         [Fact]
         public void ANodeLeadingToItselfIsACycle() {
             var path = GraphFactory.CreateEdges("A-A");

@@ -17,7 +17,7 @@ namespace Acme.Tests {
 
         [Fact]
         public void MustHaveNodes() {
-            typeof(DirectedGraph).Invoking(_ => 
+            typeof(DirectedGraph).Invoking(_ =>
                 DirectedGraph.Of(
                     GraphFactory.CreateEdges(), null))
                 .Should().Throw<ArgumentNullException>()
@@ -28,7 +28,7 @@ namespace Acme.Tests {
         public void MustNotHaveDuplicateNodes() {
             typeof(DirectedGraph)
                 .Invoking(_ => DirectedGraph.Of(
-                    GraphFactory.CreateEdges(), 
+                    GraphFactory.CreateEdges(),
                     GraphFactory.CreateNodes("A", "A")))
                 .Should().Throw<ArgumentException>()
                 .Which.ParamName.Should().Be("nodes");
@@ -38,7 +38,7 @@ namespace Acme.Tests {
         public void MayHaveDuplicateEdges() {
             var graph = typeof(DirectedGraph)
                 .Invoking(_ => DirectedGraph.Of(
-                    GraphFactory.CreateEdges("A-B", "A-B"), 
+                    GraphFactory.CreateEdges("A-B", "A-B"),
                     GraphFactory.CreateNodes("A", "B")))
                 .Should().NotThrow()
                 .Subject;

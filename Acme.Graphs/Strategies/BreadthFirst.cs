@@ -7,7 +7,7 @@ namespace Acme.Graphs {
         public static IEnumerable<NodeIdentity> VisitAll(DirectedGraph graph, NodeIdentity start) {
             ArgumentHelpers.ThrowIfNull(() => graph);
             ArgumentHelpers.ThrowIfNull(() => start);
-            
+
             var unvisited = new Queue<NodeIdentity>();
             var spotted = new HashSet<NodeIdentity>();
 

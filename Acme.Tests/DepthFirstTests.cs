@@ -42,7 +42,7 @@ namespace Acme.Tests {
                 GraphFactory.BuildGraph("A-B", "C-D"), NodeIdentity.Of("A"))
                 .Should()
                 .ContainInOrder(
-                    NodeIdentity.Of("A"), 
+                    NodeIdentity.Of("A"),
                     NodeIdentity.Of("B")
                 ).And.HaveCount(2);
         }

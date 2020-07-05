@@ -29,7 +29,7 @@ namespace Acme.Tests {
             var firstPath = CreatePath(first);
             var secondPath = CreatePath(second);
             var expectedOverlap = CreatePath(expected);
-            ((object)OverlapFinder.FindOverlap(firstPath, secondPath    ))
+            ((object)OverlapFinder.FindOverlap(firstPath, secondPath))
                 .Should().Be(expectedOverlap);
         }
 

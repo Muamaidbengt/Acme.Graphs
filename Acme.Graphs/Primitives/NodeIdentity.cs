@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Acme.Graphs
-{
-    public class NodeIdentity : IEquatable<NodeIdentity>
-    {
-        private NodeIdentity(string identity)
-        {
+namespace Acme.Graphs {
+    public class NodeIdentity : IEquatable<NodeIdentity> {
+        private NodeIdentity(string identity) {
             ArgumentHelpers.ThrowIfNull(() => identity);
             Identity = identity;
         }
@@ -23,8 +20,7 @@ namespace Acme.Graphs
 
         public override int GetHashCode() => 91194611 + EqualityComparer<string>.Default.GetHashCode(Identity);
 
-        public static bool operator ==(NodeIdentity a, NodeIdentity b)
-        {
+        public static bool operator ==(NodeIdentity a, NodeIdentity b) {
             if (ReferenceEquals(a, b)) {
                 return true;
             }
@@ -36,8 +32,7 @@ namespace Acme.Graphs
             return a.Equals(b);
         }
 
-        public static bool operator !=(NodeIdentity a, NodeIdentity b)
-        {
+        public static bool operator !=(NodeIdentity a, NodeIdentity b) {
             if (ReferenceEquals(a, b)) {
                 return false;
             }

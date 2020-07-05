@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Acme.Graphs {
     public class DirectedGraph {
@@ -31,7 +31,7 @@ namespace Acme.Graphs {
 
         public IEnumerable<DirectedEdge> Edges => _edges.SelectMany(fromEdge => fromEdge.Value);
 
-        public static DirectedGraph Of(IEnumerable<DirectedEdge> edges, IEnumerable<NodeIdentity> nodes) 
+        public static DirectedGraph Of(IEnumerable<DirectedEdge> edges, IEnumerable<NodeIdentity> nodes)
             => new DirectedGraph(edges, nodes);
     }
 }

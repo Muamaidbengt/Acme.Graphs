@@ -7,7 +7,7 @@ namespace Acme.Tests.TestHelpers {
             var edges = new List<DirectedEdge>();
             var nodes = new HashSet<NodeIdentity>();
 
-            foreach(var description in edgeDescriptions) {
+            foreach (var description in edgeDescriptions) {
                 if (description.Contains("-")) {
                     var edge = CreateEdge(description);
                     edges.Add(edge);
