@@ -73,13 +73,18 @@ jobs:
       
     - name: Build
       run: dotnet build --configuration Release --no-restore /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }}
- 
+      env:
+        FileVersion: ${{ env.GITVERSION_ASSEMBLYSEMFILEVER }}
+        AssemblyVersion: ${{ env.GITVERSION_ASSEMBLYSEMVER }}
+        InformationalVersion: ${{ env.GITVERSION_INFORMATIONALVERSION }}
       
     - name: Test
       run: dotnet test --no-restore --verbosity normal
       
     - name: Create the package
-      run: dotnet pack --configuration Release Acme.Graphs
+      run: dotnet pack --configuration Release Acme.Graphs --no-build
+      env:
+        PackageVersion: ${{ env.GITVERSION_NUGETVERSIONV2 }}
       
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.2
