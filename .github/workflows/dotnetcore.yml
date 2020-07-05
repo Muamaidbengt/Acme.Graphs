@@ -72,7 +72,8 @@ jobs:
       run: dotnet restore
       
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }}
+ 
       
     - name: Test
       run: dotnet test --no-restore --verbosity normal
