@@ -2,6 +2,7 @@
 using Acme.Graphs.Helpers;
 using Acme.Tests.TestHelpers;
 using FluentAssertions;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -67,6 +68,8 @@ namespace Acme.Tests {
             var firstPath = CreatePath(first);
             var otherPath = CreatePath(other);
             firstPath.Contains(otherPath).Should().BeTrue();
+            var otherEdges = CreateEdges(other);
+            firstPath.Contains(otherEdges).Should().BeTrue();
         }
 
         [Theory]
@@ -77,6 +80,8 @@ namespace Acme.Tests {
             var firstPath = CreatePath(first);
             var otherPath = CreatePath(other);
             firstPath.Contains(otherPath).Should().BeFalse();
+            var otherEdges = CreateEdges(other);
+            firstPath.Contains(otherEdges).Should().BeFalse();
         }
 
         [Theory]
@@ -95,8 +100,18 @@ namespace Acme.Tests {
             extension.Should().Be(expectedPath);
         }
 
-        private Path CreatePath(string sequence) {
-            return GraphFactory.CreatePath(sequence.Select(letter => letter.ToString()).ToArray());
+        private Path CreatePath(string sequence) =>
+            GraphFactory.CreatePath(sequence.Select(letter => letter.ToString()).ToArray());
+
+        private IEnumerable<DirectedEdge> CreateEdges(string sequence) {
+            if (string.IsNullOrEmpty(sequence)) {
+                yield return null;
+            }
+            var prev = sequence[0];
+            foreach (var c in sequence.Skip(1)) {
+                yield return GraphFactory.CreateEdge(string.Format("{0}-{1}", prev, c));
+                prev = c;
+            }
         }
     }
 }

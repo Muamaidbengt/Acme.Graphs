@@ -22,12 +22,12 @@ namespace Acme.Graphs.Helpers {
             return edges.Any(e => e.To == node);
         }
 
-        public static bool ContainsExactly(this Path path, IEnumerable<DirectedEdge> edges) {
+        public static bool Contains(this Path path, IEnumerable<DirectedEdge> edges) {
             ArgumentHelpers.ThrowIfNull(() => path);
             ArgumentHelpers.ThrowIfNull(() => edges);
 
-            var needle = Path.Of(edges);
-            return Contains(path, needle);
+            var other = Path.Of(edges);
+            return path.Contains(other);
         }
 
         public static bool Contains(this Path path, Path other) {
