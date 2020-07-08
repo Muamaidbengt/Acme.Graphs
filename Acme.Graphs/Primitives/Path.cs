@@ -20,6 +20,9 @@ namespace Acme.Graphs {
         }
 
         public static Path Of(IEnumerable<DirectedEdge> steps) {
+            if (!steps.Any()) {
+                return Empty;
+            }
             var s = steps.Select(step => step.To).ToList();
             s.Insert(0, steps.First().From);
             return Of(s);

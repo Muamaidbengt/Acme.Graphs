@@ -105,7 +105,7 @@ namespace Acme.Tests {
 
         private IEnumerable<DirectedEdge> CreateEdges(string sequence) {
             if (string.IsNullOrEmpty(sequence)) {
-                yield return null;
+                yield break;
             }
             var prev = sequence[0];
             foreach (var c in sequence.Skip(1)) {
