@@ -30,6 +30,7 @@ namespace Acme.Graphs {
         public int EdgeCount => Edges.Count();
 
         public IEnumerable<DirectedEdge> Edges => _edges.SelectMany(fromEdge => fromEdge.Value);
+        public IEnumerable<NodeIdentity> Nodes => _nodes;
 
         public static DirectedGraph Of(IEnumerable<DirectedEdge> edges, IEnumerable<NodeIdentity> nodes)
             => new DirectedGraph(edges, nodes);
