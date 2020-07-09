@@ -2,6 +2,7 @@
 using Acme.Tests.TestHelpers;
 using FluentAssertions;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace Acme.Tests {
@@ -43,6 +44,26 @@ namespace Acme.Tests {
                 .Should().NotThrow()
                 .Subject;
             graph.EdgeCount.Should().Be(2);
+        }
+
+        [Fact]
+        public void CannotChangeItsSetOfNodes() {
+            var edges = GraphFactory.CreateEdges("A-B");
+            var nodes = GraphFactory.CreateNodes("A", "B").ToList();
+            var graph = DirectedGraph.Of(edges, nodes);
+            graph.Nodes.Should().HaveCount(2);
+            nodes.Add(GraphFactory.CreateNode("C"));
+            graph.Nodes.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public void CannotChangeItsSetOfEdges() {
+            var edges = GraphFactory.CreateEdges("A-B").ToList();
+            var nodes = GraphFactory.CreateNodes("A", "B");
+            var graph = DirectedGraph.Of(edges, nodes);
+            graph.EdgeCount.Should().Be(1);
+            edges.Add(GraphFactory.CreateEdge("B-A"));
+            graph.EdgeCount.Should().Be(1);
         }
     }
 }
